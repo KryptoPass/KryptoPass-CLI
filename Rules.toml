@@ -1,0 +1,75 @@
+# TOML [Tom's Obvious Minimal Language]
+#  Perfiles del generador de contraseñas 
+
+[properties]    # Propiedades generales de la regla
+name = "Perfil del Banco Merc"  # Rule name
+lang = ["es", "en"]             # Languages supported by the rule e.g ["ja", "en"] or "zh" use ISO_639-2 codes
+type = "password"               # password or passphrase
+
+
+[requirements]  # Requisitos de la contraseña
+length = { min = 6, max = 128 } # Number or { min = Number, max = Number }
+uppercase = { min = 1, max = -1 }  # Number or { min = Number, max = Number }, use -1 in max so that a maximum does not apply
+lowercase = { min = 1, max = -1 }  # Number or { min = Number, max = Number }
+digits = { min = 2, max = -1 }     # Number or { min = Number, max = Number }
+symbols = { min = 2, max = -1 }    # Number or { min = Number, max = Number }
+
+[allowed]     # Caracteres permitidos en la contraseña
+include = [
+    0x1F606                           # 😆
+]
+
+[not_allowed] # Caracteres no permitidos en la contraseña
+exclude = [
+    0x00DA,                           # Ú
+    0x00FA,                           # ú
+    0x00A8                            # ¨
+]
+
+[rules] # Reglas adicionales
+max-consecutive = 2                 # Número máximo de caracteres idénticos consecutivos
+min-entropy = 20                    # DPG7_SGS\FILn".Q,bmm
+# zxcvbnm
+# qwerty
+# asdfgh
+# poiuytrewq
+
+[es]    # Configuración específica para el idioma español
+uppercase = [
+    { start = 0x0041, end = 0x005A }, # A-Z
+    0x00D1,                           # Ñ
+    0x00C1,                           # Á
+    0x00C9,                           # É
+    0x00CD,                           # Í
+    0x00D3,                           # Ó
+    0x00DA,                           # Ú
+    0x00DC,                           # Ü
+]
+
+lowercase = [
+    { start = 0x0061, end = 0x007A }, # a-z
+    0x00F1,                           # ñ
+    0x00E1,                           # á
+    0x00E9,                           # é
+    0x00ED,                           # í
+    0x00F3,                           # ó
+    0x00FA,                           # ú
+    0x00FC,                           # ü
+]
+
+digits = [
+    { start = 0x0030, end = 0x0039 }, # 0-9
+]
+
+symbols = [
+    # Standard English symbols
+    { "start" = 0x0021, "end" = 0x002F }, # !\"#$%&'()*+,-./
+    { "start" = 0x003A, "end" = 0x0040 }, # :;<=>?@
+    { "start" = 0x005B, "end" = 0x0060 }, # [\\]^_`
+    { "start" = 0x007B, "end" = 0x007E }, # {|}~
+
+    # Extra symbols specific to Spanish
+    0x00BF,                               # ¿
+    0x00A1,                               # ¡
+    0x00A8,                               # ¨
+]

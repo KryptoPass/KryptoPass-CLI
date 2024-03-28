@@ -1,14 +1,12 @@
 [package]
-name = "krypto_pass"
+name = "kryptopass-cli"
 version = "0.1.0"
 edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-dialoguer = "0.11.0"
-rtoolbox = "0.0.2"
-rustbox = "0.11.0"
-rustyline = "13.0.0"
-unicode-width = "0.1.11"
-windows = { version = "0.52.0", features = ["Win32_Foundation", "Win32_Security", "Win32_Security_Cryptography", "Win32_System_SystemServices", "Win32_System", "Win32_System_Com"] }
+clap = { version = "4.5.3", features = ["derive"] }
+openssl = "0.10.64"
+rand = "0.8.5"
+toml = "0.8.12"

@@ -1,0 +1,226 @@
+use openssl::rand::rand_bytes;
+use std::mem;
+
+#[derive(Debug)]
+enum Length {
+    Number(i32),
+    Range { min: i32, max: i32 },
+}
+
+#[derive(Debug)]
+enum CharSet {
+    Range { start: u32, end: u32 },
+    Include(Vec<u32>),
+}
+
+struct RuleSet {
+    uppercase: CharSet,
+    lowercase: CharSet,
+    digits: CharSet,
+    symbols: CharSet,
+    // ... other fields ...
+}
+
+impl RuleSet {
+    fn from() -> Self {
+        RuleSet {
+            uppercase: CharSet::Range { start: 0x0041, end: 0x005A },
+            lowercase: CharSet::Range { start: 0x0061, end: 0x007A },
+            digits: CharSet::Range { start: 0x0030, end: 0x0039 },
+            symbols: CharSet::Include(vec![0x0021, 0x002F, 0x003A, 0x0040, 0x005B, 0x0060, 0x007B, 0x007E]),
+            // ... other fields ...
+        }
+    }
+}
+
+struct Rules {
+    name: String,
+    lang: Vec<&'static str>,
+    length: Length,
+    ruleset: RuleSet,
+}
+
+impl Rules {
+    pub fn from() -> Self {
+        Rules {
+            name: String::from("General Purpose Rules"),
+            lang: vec!["es", "en"],
+            length: Length::Range { min: 6, max: 128 },
+            ruleset: RuleSet::from(),
+        }
+    }
+}
+
+pub struct PasswordEngine {
+    rules: Rules,
+}
+
+impl PasswordEngine {
+    pub fn from_file(file: String) -> Self {
+        let rules = Rules::from();
+
+        PasswordEngine { rules }
+    }
+
+    pub fn get_length(&self) -> i32 {
+        match &self.rules.length {
+            Length::Number(n) => *n,
+            Length::Range { min, max } => {
+                let mut buf = [0u8; 4];
+                rand_bytes(&mut buf).unwrap();
+                let num = unsafe { mem::transmute::<[u8; 4], i32>(buf) };
+                num.abs() % (max - min + 1) + min
+            }
+        }
+    }
+
+    fn get_chars_from_range(start: u32, end: u32) -> Vec<char> {
+        (start..=end)
+            .filter_map(char::from_u32)
+            .collect()
+    }
+
+    fn get_chars_from_include(include: Vec<u32>) -> Vec<char> {
+        include
+            .into_iter()
+            .filter_map(char::from_u32)
+            .collect()
+    }
+
+    pub fn generate(&self) -> String {
+        let length = self.get_length();
+        println!("The Num is: {}", length);
+
+        // Now we need to generate a password that fits the rules.
+        // We can do this by randomly choosing a character set (uppercase, lowercase, digits, symbols),
+        // then randomly choosing a character from that set, and repeating this until we have a password
+        // of the correct length. We also need to check the password against the rules after each character
+        // is added, and if it doesn't fit the rules, we should remove the last character and try again.
+
+        // This is just a rough outline, and you'll need to fill in the details based on your specific rules
+        // and requirements. Good luck!
+
+        String::new()
+    }
+}
+
+
+
+
+
+// mod kplib;
+
+// use kplib::crypto;
+// use kplib::generators;
+
+// struct Rule {}
+
+// impl Rule {
+//     fn new() -> Self {
+//         Rule {}
+//     }
+
+//     fn loadRule(filePath: String) -> Self {
+//         Rule {}
+//     }
+// }
+
+// /// Rule-Guided Character Generator
+// struct RCG {}
+
+// impl RCG {
+//     fn new() -> Self {
+//         RCG {}
+//     }
+
+//     fn setRule(&self, rule: Rule) {}
+// }
+
+// use std::fs::File;
+// use std::io::Read;
+// use toml::Value;
+
+// fn main() {
+//     // Carga el archivo TOML
+//     let mut file = File::open("rules.toml").unwrap();
+//     let mut contents = String::new();
+//     file.read_to_string(&mut contents).unwrap();
+
+//     // Analiza el archivo TOML
+//     let toml = contents.parse::<Value>().unwrap();
+
+//     // Accede a los valores
+//     let properties = toml.get("properties").unwrap();
+//     let name = properties.get("name").unwrap().as_str().unwrap();
+//     let lang = properties.get("lang").unwrap().as_array().unwrap();
+//     let type_ = properties.get("type").unwrap().as_str().unwrap();
+//     let length = properties.get("length").unwrap().as_table().unwrap();
+
+//     println!("name: {}", name);
+//     println!("lang: {:?}", lang);
+//     println!("type: {}", type_);
+//     println!("length: {:?}", length);
+
+//     // Accede a los valores
+//     let requirements = toml.get("requirements").unwrap();
+//     let uppercase = requirements.get("uppercase").unwrap().as_table().unwrap();
+//     let lowercase = requirements.get("lowercase").unwrap().as_table().unwrap();
+//     let digits = requirements.get("digits").unwrap().as_table().unwrap();
+//     let symbols = requirements.get("symbols").unwrap().as_table().unwrap();
+
+//     // Requirements
+//     println!("-----------requirements-----------");
+
+//     println!("uppercase: {:?}", uppercase);
+//     println!("lowercase: {:?}", lowercase);
+//     println!("digits: {:?}", digits);
+//     println!("symbols: {:?}", symbols);
+// }
+
+// use openssl::rand::rand_bytes;
+// use std::str;
+
+// // Rule-Guided Character Generator
+// pub struct RCG {
+//     password: String,
+// }
+
+// impl RCG {
+//     pub fn new() -> Self {
+//         let mut buf = [0; 16];
+//         rand_bytes(&mut buf).unwrap();
+
+//         // Convertimos los bytes a caracteres ASCII imprimibles
+//         let password: String = buf.iter().map(|b| (b % 94 + 33) as char).collect();
+
+//         RCG { password }
+//     }
+
+//     pub fn get_password(&self) -> &str {
+//         &self.password
+//     }
+// }
+
+// use ::kryptopass_cli::RCG;
+// use clap::Parser;
+
+// #[derive(Parser, Debug)]
+// #[command(version, about, long_about = None)]
+// struct CLI {}
+// impl CLI {}
+
+// fn main() {
+//     let app: CLI = CLI::parse();
+
+//     let generator = RCG::new();
+
+//     let allow_characters = vec!["a", "b"];
+//     let disallow_characters = vec!["z", "x"];
+
+//     let allow_emojis = false;
+//     let length = 10;
+
+//     // generator.rules(includes: vec!["a", "b", "c"]);
+
+//     println!("Generated password: {}", generator.get_password());
+// }
