@@ -1,3 +1,1594 @@
+// mod commands;
+// mod constants;
+
+// use clap::Args;
+// pub use clap::{Parser, Subcommand};
+
+// use constants::KRYPTOPASS_VERSION;
+
+// #[derive(Debug, Parser)]
+// #[command(
+//     name = "KryptoPass",
+//     bin_name = "kryptopass",
+//     version = KRYPTOPASS_VERSION,
+//     about = "KryptoPass: Password Manager!",
+//     long_about = "KryptoPass: Your digital fortress of secrets guarded by cryptographic wizardry! 🌟🔐",
+//     author = "Gabriel Maizo <maizogabriel@outlook.com>"
+// )]
+// pub struct CLI {
+//     #[arg(long, global = true)]
+//     verbose: bool,
+
+//     #[command(subcommand)]
+//     command: Commands,
+// }
+
+// impl CLI {
+//     pub fn bootstrap(&self) {}
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Commands {
+//     #[command(name = "create", subcommand)]
+//     Create(CreateCommands),
+
+//     #[command(name = "add", subcommand)]
+//     Add(AddCommands),
+
+//     #[command(name = "set", subcommand)]
+//     Set(SetCommands),
+
+//     #[command(name = "show", subcommand)]
+//     Show(ShowCommands),
+
+//     #[command(name = "save", subcommand)]
+//     Save(SaveCommands),
+
+//     #[command(name = "generate", subcommand)]
+//     Generate(GenerateCommands),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum CreateCommands {
+//     #[command(name = "rule")]
+//     Rule(CreateRule),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum AddCommands {
+//     #[command(name = "rule")]
+//     Rule(AddRule),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum SetCommands {
+//     #[command(name = "rule")]
+//     Rule(SetRule),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum ShowCommands {
+//     #[command(name = "rule")]
+//     Rule(ShowRule),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum SaveCommands {
+//     #[command(name = "rule")]
+//     Rule(SaveRule),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum GenerateCommands {
+//     #[command(name = "rule")]
+//     Rule(GenerateRule),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Create {
+//     #[command(name = "rule")]
+//     Rule {
+//         #[arg(long)]
+//         name: String,
+
+//         #[arg(long)]
+//         description: String,
+//     },
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Add {
+//     #[command(name = "charset")]
+//     Charset {
+//         #[arg(long)]
+//         rule: String,
+
+//         #[arg(long)]
+//         name: String,
+
+//         #[arg(long)]
+//         values: String,
+//     },
+// }
+
+// #[derive(Debug, Args)]
+// struct CreateRule {
+//     #[arg(long)]
+//     name: String,
+
+//     #[arg(long)]
+//     description: String,
+// }
+// #[derive(Debug, Args)]
+// struct AddRule {
+//     #[arg(long)]
+//     rule: String,
+
+//     #[arg(long)]
+//     name: String,
+
+//     #[arg(long)]
+//     values: String,
+// }
+
+// #[derive(Debug, Args)]
+// struct SetRule {
+//     #[arg(long)]
+//     rule: String,
+
+//     #[arg(long)]
+//     length: u8,
+
+//     #[arg(long)]
+//     lowercase: bool,
+
+//     #[arg(long)]
+//     uppercase: u8,
+
+//     #[arg(long)]
+//     digits: u8,
+
+//     #[arg(long)]
+//     symbols: String,
+// }
+
+// #[derive(Debug, Args)]
+// struct ShowRule {
+//     #[arg(long)]
+//     rule: String,
+// }
+
+// #[derive(Debug, Args)]
+// struct SaveRule {
+//     #[arg(long)]
+//     name: String,
+// }
+
+// #[derive(Debug, Args)]
+// struct GenerateRule {
+//     #[arg(long)]
+//     rule: String,
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// mod constants;
+
+// pub use clap::{Args, Parser, Subcommand, ValueEnum};
+
+// use crate::modules::core::crypto::test_systems;
+// use constants::KRYPTOPASS_VERSION;
+
+// #[derive(Debug, Parser)]
+// #[command(
+//     name = "KryptoPass",
+//     bin_name = "kryptopass",
+//     version = KRYPTOPASS_VERSION,
+//     about = "KryptoPass: Password Manager!",
+//     long_about = "KryptoPass: Your digital fortress of secrets guarded by cryptographic wizardry! 🌟🔐",
+//     author = "Gabriel Maizo <maizogabriel@outlook.com>"
+// )]
+// pub struct CLI {
+//     #[arg(long, global = true)]
+//     verbose: bool,
+
+//     #[command(subcommand)]
+//     command: Commands,
+// }
+
+// impl CLI {
+//     pub fn bootstrap(&self) {
+//         test_systems();
+
+//         match &self.command {
+//             Commands::Password(value) => match value {
+//                 PasswordSub::Generate {
+//                     rule,
+//                     length,
+//                     upper,
+//                     lower,
+//                 } => {
+//                     println!("{:#?}", rule);
+//                     println!("{:#?}", length);
+//                     println!("{}", lower);
+//                     println!("{}", upper);
+//                 }
+//             },
+//         }
+//     }
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Commands {
+//     /// Doc comment
+//     #[command(name = "password", subcommand)]
+//     Password(PasswordSub),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum PasswordSub {
+//     #[command(name = "generate")]
+//     Generate {
+//         /// Password rule
+//         #[arg(
+//             short,
+//             long,
+//             alias = "profile",
+//             short_alias = 'p',
+//             visible_alias = "-p, --profile <RULE>",
+//             exclusive = true
+//         )]
+//         rule: Option<String>,
+
+//         /// Password length
+//         #[arg(long)]
+//         length: Option<u8>,
+
+//         /// Include uppercase letters
+//         #[arg(short, long)]
+//         upper: bool,
+
+//         /// Include lowercase letters
+//         #[arg(short, long)]
+//         lower: bool,
+//     },
+// }
+
+
+
+// Aquí van las definiciones de CreateRule, AddRule, SetRule, ShowRule, SaveRule, GenerateRule
+
+// #[derive(Debug, Subcommand)]
+// enum Commands {
+//     #[command(name = "rule", subcommand)]
+//     Rule(RuleCommands),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum RuleCommands {
+//     #[command(name = "create", subcommand)]
+//     Create(Create),
+
+//     #[command(name = "add", subcommand)]
+//     Add(Add),
+
+//     #[command(name = "set", subcommand)]
+//     Set(Set),
+
+//     #[command(name = "show", subcommand)]
+//     Show(Show),
+
+//     #[command(name = "save", subcommand)]
+//     Save(Save),
+
+//     #[command(name = "generate", subcommand)]
+//     Generate(Generate),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Set {
+//     #[command(name = "requirements")]
+//     Requirements {
+//         #[arg(long)]
+//         rule: String,
+
+//         #[arg(long)]
+//         length: u8,
+
+//         #[arg(long)]
+//         lowercase: bool,
+
+//         #[arg(long)]
+//         uppercase: u8,
+
+//         #[arg(long)]
+//         digits: u8,
+
+//         #[arg(long)]
+//         symbols: String,
+//     },
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Show {
+//     #[command(name = "charset")]
+//     Charset {
+//         #[arg(long)]
+//         rule: String,
+//     },
+
+//     #[command(name = "requirements")]
+//     Requirements {
+//         #[arg(long)]
+//         rule: String,
+//     },
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Save {
+//     #[command(name = "rule")]
+//     Rule {
+//         #[arg(long)]
+//         name: String,
+//     },
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Generate {
+//     #[command(name = "password")]
+//     Password {
+//         #[arg(long)]
+//         rule: String,
+//     },
+// }
+
+// mod commands;
+// mod constants;
+
+// use crate::modules::core::generators::password::{PasswordEngine, Rules};
+// pub use clap::{Parser, Subcommand};
+
+// #[derive(Debug, Subcommand)]
+// enum Commands {
+//     /// Doc comment
+//     #[command(name = "create", subcommand)]
+//     Create(Create),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum Create {
+//     /// Doc comment
+//     #[command(name = "rule", subcommand)]
+//     RuleSub(RuleSub),
+// }
+
+// #[derive(Debug, Subcommand)]
+// enum RuleSub {
+//     /// Doc comment
+//     #[command(name = "create", subcommand)]
+//     Password(PasswordCommand),
+// }
+
+// #[derive(Debug, Subcommand)]
+// pub enum PasswordCommand {
+//     #[command(name = "generate")]
+//     Generate {
+//         /// Password rule
+//         #[arg(
+//             short,
+//             long,
+//             alias = "profile",
+//             short_alias = 'p',
+//             visible_alias = "-p, --profile <RULE>",
+//             exclusive = true
+//         )]
+//         rule: Option<String>,
+
+//         /// Password length
+//         #[arg(long)]
+//         length: Option<u8>,
+
+//         /// Include uppercase letters
+//         #[arg(short, long)]
+//         upper: bool,
+
+//         /// Include lowercase letters
+//         #[arg(short, long)]
+//         lower: bool,
+//     },
+// }
+
+// impl PasswordCommand {
+//     pub fn execute(&self) {
+//         match self {
+//             PasswordCommand::Generate {
+//                 rule,
+//                 length,
+//                 upper,
+//                 lower,
+//             } => {
+//                 let p = match rule {
+//                     Some(rule_path) => {
+//                         let rule = Rules::from_file(rule_path).unwrap();
+//                         PasswordEngine::from_rules(rule)
+//                     }
+//                     None => {
+//                         // Default rule if no rule file is provided-
+//                         let rule = Rules::default();
+//                         PasswordEngine::from_rules(rule)
+//                     }
+//                 };
+
+//                 println!("{}", p.generate().unwrap());
+
+//                 if let Some(len) = length {
+//                     println!("Length: {:#?}", len);
+//                     println!("Lowercase included: {}", lower);
+//                     println!("Uppercase included: {}", upper);
+//                 }
+//             }
+//         }
+//     }
+// }
+
+
+
+// #[derive(Debug, Deserialize, Serialize)]
+// pub struct Charset {
+//     pub name: String,
+//     pub code: String,
+//     pub charsets: HashMap<String, Charset>,
+// }
+
+// fn get_languages(toml: &TOMLParser, properties: &Properties) -> Vec<Charset> {
+//     let languages: Vec<Charset> = properties
+//         .lang
+//         .iter()
+//         .map(|lang| {
+//             let language_table = toml.get(lang).unwrap().as_table().unwrap();
+
+//             let lang_name = language_table.get("name").unwrap().as_str().unwrap();
+
+//             let mut charsets: HashMap<String, Charset> = HashMap::new();
+//             for k in language_table.keys() {
+//                 let _language = language_table.get(k).unwrap();
+
+//                 let is_charset = _language.get("charset");
+
+//                 let is_charset = match is_charset {
+//                     Some(value) => value.as_bool().unwrap(),
+//                     None => false,
+//                 };
+
+//                 if is_charset {
+//                     let charset = _language.get("values").unwrap().as_array().unwrap();
+//                     let name = _language.get("name").unwrap().as_str().unwrap();
+//                     let charset = Self::normalize_charset(charset);
+//                     charsets.insert(
+//                         k.clone(),
+//                         Charset {
+//                             chars: charset,
+//                             name: name.to_string(),
+//                             code: k.clone(),
+//                         },
+//                     );
+//                 }
+//             }
+
+//             Charset {
+//                 name: lang_name.to_string(),
+//                 code: lang.clone(),
+//                 charsets,
+//             }
+//         })
+//         .collect();
+
+//     return languages;
+// }
+
+// use kplib::random::Random;
+// // Bytes
+// println!("Rand Bytes: {:?}", Random::rand_bytes(20));
+// println!("Rand Priv Bytes: {:?}", Random::rand_priv_bytes(20));
+
+// // Tokens
+// println!("Token URL Safe: {}", Random::token_urlsafe(20));
+// println!("Token Bytes: {:?}", Random::token_bytes(20));
+// println!("Token HEX: {}", Random::token_hex(20));
+
+// // Numbers
+// println!("Rand Range: {}", Random::rand_range(0, 20).unwrap());
+
+// // C
+// let mut fruits = vec!["Bananas", "Apples", "Melon"];
+
+// println!("Fruits: {:?}", fruits);
+// println!("Choice: {}", Random::choice(&fruits).unwrap());
+
+// Random::shuffle(&mut fruits);
+// println!("Shuffle: {:?}", fruits);
+
+// Rand Bytes: [233, 102, 77, 142, 211, 205, 139, 67, 248, 124, 208, 85, 240, 203, 74, 233, 141, 221, 108, 57]
+// Rand Priv Bytes: [192, 168, 24, 144, 147, 35, 102, 87, 235, 182, 7, 69, 255, 252, 200, 169, 236, 53, 146, 49]
+// Token URL Safe: VLc6QlNX-7CJ-G4L-Xtqu9AB6Ik=
+// Token Bytes: [2, 28, 232, 122, 0, 22, 33, 208, 83, 133, 109, 33, 63, 75, 201, 46, 233, 203, 248, 61]
+// Token HEX: ee0dff9c51f354a46289b429f5a675f581fe1040
+// Rand Range: 3
+// Fruits: ["Bananas", "Apples", "Melon"]
+// Choice: Apples
+// Shuffle: ["Apples", "Bananas", "Melon"]
+
+// Que es lo que sabes de una computadora.
+//
+
+
+
+// use openssl::rand::rand_bytes;
+// use std::cmp;
+
+// pub struct Random {}
+
+// impl Random {
+//     /// Return random integer in range [a, b], including both end points.
+//     pub fn rand_range(min: i32, max: i32) -> Option<i32> {
+//         let (min, max) = (cmp::min(min, max), cmp::max(min, max));
+//         let range = (max - min + 1) as u32;
+//         let mut buf = [0u8; 4];
+//         let limit = u32::MAX - (u32::MAX % range);
+
+//         loop {
+//             let res = rand_bytes(&mut buf);
+
+//             match res {
+//                 Ok(_) => {
+//                     let num = u32::from_ne_bytes(buf);
+
+//                     // Check if the value is within the desired range
+//                     if num < limit {
+//                         return Some(((num % range) + min as u32) as i32);
+//                     }
+//                 }
+//                 Err(e) => {
+//                     eprintln!("Error generating random number: {}", e);
+//                     return None;
+//                 }
+//             }
+//         }
+//     }
+
+//     /// Return a random element from a vector.
+//     pub fn choice<T>(items: &[T]) -> Option<&T> {
+//         if items.is_empty() {
+//             None
+//         } else {
+//             let index = Self::rand_range(0, (items.len() - 1) as i32)? as usize;
+//             Some(&items[index])
+//         }
+//     }
+
+//     /// Shuffle a mutable slice randomly
+//     pub fn shuffle<T>(items: &mut [T]) {
+//         let len = items.len();
+//         for _ in 0..len {
+//             let i = Self::rand_range(0, (len - 1) as i32).unwrap() as usize;
+//             let j = Self::rand_range(0, (len - 1) as i32).unwrap() as usize;
+//             items.swap(i, j);
+//         }
+//     }
+// }
+
+// "Random",
+// "SystemRandom",
+// "betavariate",
+// "choice",
+// "choices",
+// "expovariate",
+// "gammavariate",
+// "gauss",
+// "getrandbits",
+// "getstate",
+// "lognormvariate",
+// "normalvariate",
+// "paretovariate",
+// "randbytes",
+// "randint",
+// "random",
+// "randrange",
+// "sample",
+// "seed",
+// "setstate",
+// "shuffle",
+// "triangular",
+// "uniform",
+// "vonmisesvariate",
+// "weibullvariate",
+
+// 'choice', 'randbelow', 'randbits', 'SystemRandom',
+//            'token_bytes', 'token_hex', 'token_urlsafe',
+//            'compare_digest',
+
+
+// # Quiero una contraseña de longitud 10, que tenga minimo 2 mayusculas y 4 como maximo, ademas las minusculas deben se explicitamente 2 y no quiero que tenga numeros pero si simbolos.
+// # Limite es 10
+// # Nos piden que repetemos un minimo de 2 letras mayusculas y como maximo 4
+// # Nos piden qeu respetemos 2 letras minusculas
+// # Nos piden que no necesitamos digitos
+// # Nos piden que agregemos simbolos
+
+// # La suma de los maximos y explicitos no debe superar la longitud y posiblemente no debe dejar conjuntos de caracteres fuera.
+
+
+
+// use crate::kplib::generators::rules::{MinMax, Requirement, Rules};
+// use crate::kplib::random::Random;
+
+// pub struct PasswordEngine {
+//     rules: Rules,
+// }
+
+// impl PasswordEngine {
+//     pub fn from_rules(rules: Rules) -> Self {
+//         PasswordEngine { rules }
+//     }
+
+//     pub fn generate(&self) -> String {
+//         let length = self.get_length();
+
+//         if !self.check_requirements(length) {
+//             panic!("Invalid Input");
+//         }
+
+//         let mut password = Vec::new();
+//         let mut active_chars = Vec::new();
+
+//         for (key, requirement) in &self.rules.requirements {
+//             if key == "length" {
+//                 continue;
+//             }
+
+//             let charset = self.rules.charset.get(key).unwrap();
+
+//             match requirement {
+//                 Requirement::MinMax(min_max) => {
+//                     let MinMax { min, max } = min_max;
+
+//                     let amount = Random::rand_range((*min).into(), (*max).into()).unwrap() as u8;
+
+//                     for _ in 0..amount {
+//                         let r = Random::choice(&charset.chars).unwrap();
+//                         password.push(r.to_string());
+//                     }
+//                 }
+//                 Requirement::Amount(amount) => {
+//                     for _ in 0..*amount {
+//                         let r = Random::choice(&charset.chars).unwrap();
+//                         password.push(r.to_string());
+//                     }
+//                 }
+//                 Requirement::Active(is_active) => {
+//                     if *is_active {
+//                         for _ in 0..length {
+//                             let r = Random::choice(&charset.chars).unwrap();
+//                             active_chars.push(r.to_string());
+//                         }
+//                     }
+//                 }
+//             }
+//         }
+
+//         // Mezcla los caracteres activos y selecciona los que faltan
+//         Random::shuffle(&mut active_chars);
+
+//         while password.len() < length as usize {
+//             password.push(active_chars.pop().unwrap());
+//         }
+
+//         // Mezcla los caracteres de la contraseña para evitar patrones
+//         Random::shuffle(&mut password);
+
+//         password.join("")
+//     }
+
+//     fn check_requirements(&self, length: u8) -> bool {
+//         let mut count = 0;
+
+//         for (key, requirement) in &self.rules.requirements {
+//             if key == "length" {
+//                 continue;
+//             }
+
+//             match requirement {
+//                 Requirement::MinMax(min_max) => {
+//                     let MinMax { min, .. } = min_max;
+//                     count += *min;
+//                 }
+//                 Requirement::Amount(amount) => {
+//                     count += *amount;
+//                 }
+//                 Requirement::Active(active) => {
+//                     if *active {
+//                         count += 1;
+//                     }
+//                 }
+//             }
+//         }
+
+//         if count > length {
+//             return false;
+//         }
+
+//         true
+//     }
+
+//     fn get_length(&self) -> u8 {
+//         match self.rules.requirements.get("length").unwrap() {
+//             Requirement::MinMax(min_max) => {
+//                 let MinMax { min, max } = min_max;
+//                 Random::rand_range((*min).into(), (*max).into()).unwrap() as u8
+//             }
+//             Requirement::Amount(len) => *len,
+//             Requirement::Active(_) => 14,
+//         }
+//     }
+// }
+
+// Random::shuffle(&mut password);
+
+// for (key, requirement) in &self.rules.requirements {
+//     if key == "length" {
+//         continue;
+//     }
+
+//     let charset = self.rules.charset.get(key).unwrap();
+
+//     match requirement {
+//         Requirement::MinMax(min_max) => { // Aqui estoy metiendo 4 caracteres
+//             let amount =
+//                 Random::rand_range(min_max.min.into(), min_max.max.into()).unwrap() as u8;
+
+//             for _ in 0..amount {
+//                 let r = Random::choice(&charset.chars).unwrap();
+//                 password.push(r.to_string());
+//                 length += 1;
+//             }
+//         }
+//         Requirement::Amount(amount) => { // 2 minusculas
+//             for _ in 0..*amount {
+//                 let r = Random::choice(&charset.chars).unwrap();
+//                 password.push(r.to_string());
+//                 length += 1;
+//             }
+//         }
+//         Requirement::Active(is_active) => { // 0 digitos y 1 simbolo
+//             if *is_active {
+//                 let r = Random::choice(&charset.chars).unwrap();
+//                 password.push(r.to_string());
+//                 length += 1;
+//             }
+//         }
+//     }
+// }
+
+// // AAAAAaaa!
+
+// // Si la longitud de la contraseña es menor que la longitud mínima requerida, rellena con caracteres aleatorios que esten en los conjuntos de requirements
+// if let Some(Requirement::MinMax(MinMax { min, .. })) = self.rules.requirements.get("length")
+// {
+//     while length < *min as usize {
+//         let keys: Vec<&String> = self.rules.charset.keys().collect();
+//         let charset_key = Random::choice(&keys).unwrap();
+//         let charset = self.rules.charset.get(*charset_key).unwrap();
+//         let r = Random::choice(&charset.chars).unwrap();
+//         password.push(r.to_string());
+//         length += 1;
+//     }
+// }
+
+// pub fn generate(&self) -> String {
+//     let length = self.rules.requirements.get("length").unwrap();
+
+//     let length = match length {
+//         Requirement::MinMax(l) => {
+//             let value = Random::rand_range(l.min.into(), l.max.into()).unwrap();
+
+//             if value > (u8::MAX as i32) {
+//                 u8::MAX
+//             } else if value < 1 {
+//                 1
+//             } else {
+//                 value as u8
+//             }
+//         }
+//         Requirement::Amount(l) => *l,
+//         Requirement::Active(_) => 10,
+//     };
+
+//     let mut password = String::new();
+
+//     println!("{:#?}", self.rules.requirements);
+
+//     for _ in 0..length {
+//         let keys: Vec<&String> = self.rules.charset.keys().collect();
+//         let charset_key = Random::choice(&keys).unwrap();
+//         let charset = self.rules.charset.get(*charset_key).unwrap();
+
+//         let r = Random::choice(&charset.chars).unwrap();
+//         password += String::from(r.to_string()).as_str();
+//     }
+
+//     password
+// }
+
+// let mut password = Vec::new();
+// let mut required_charset = Vec::new();
+// let mut length = self.get_length();
+
+// for (key, requirement) in &self.rules.requirements {
+//     if key == "length" || password.len() >= length as usize { // It does not guarantee that all sets are used, validate later and correct.
+//         continue;
+//     }
+
+//     let charset = self.rules.charset.get(key).unwrap();
+
+//     match requirement {
+//         Requirement::MinMax(min_max) => {
+//             let MinMax { min, max } = min_max;
+
+//             let amount = Random::rand_range((*min).into(), (*max).into()).unwrap() as u8;
+
+//             for _ in 0..amount {
+//                 let r = Random::choice(&charset.chars).unwrap();
+//                 if amount == *min {
+//                     password.push(r.to_string());
+//                 } else {
+//                     required_charset.push(r.to_string());
+//                 }
+//             }
+//         }
+//         Requirement::Amount(amount) => {
+//             for _ in 0..*amount {
+//                 let r = Random::choice(&charset.chars).unwrap();
+//                 password.push(r.to_string());
+//             }
+//         }
+//         Requirement::Active(active) => {
+//             if *active {
+//                 14;
+//             }
+//         }
+//     }
+// }
+
+// password.join("")
+
+// pub fn generate(&self) -> String {
+//     // let mut password = Vec::new();
+//     let length = self.get_length();
+
+//     let mut all_possible_chars = Vec::new();
+
+//     for (key, _) in &self.rules.requirements {
+//         if key == "length" {
+//             continue;
+//         }
+
+//         let charset = self.rules.charset.get(key).unwrap();
+
+//         for _ in 0..length {
+//             let r = Random::choice(&charset.chars).unwrap();
+//             all_possible_chars.push(r.to_string());
+//         }
+//     }
+
+//     println!("{:#?}", all_possible_chars);
+
+//     String::new()
+// }
+
+
+
+// #[derive(Debug, Deserialize, Serialize)]
+// struct Language {
+//     pub name: String,
+//     pub charsets: HashMap<String, Vec<char>>,
+// }
+// fn main() {
+//     let mut contents = String::new();
+//     File::open("F:\\kryptopass-clia\\Rules.toml")
+//         .unwrap()
+//         .read_to_string(&mut contents)
+//         .unwrap();
+
+//     let toml: TOMLParser = contents.parse().unwrap();
+//     let properties: Properties = toml.get("properties").unwrap().clone().try_into().unwrap();
+
+//     let languages: Vec<Language> = properties
+//         .lang
+//         .iter()
+//         .map(|lang| {
+//             let language_table = toml.get(lang).unwrap().as_table().unwrap();
+//             let mut charsets: HashMap<String, Vec<char>> = HashMap::new();
+//             for k in language_table.keys() {
+//                 let _language = language_table.get(k).unwrap();
+//                 let is_charset = _language.get("charset").unwrap().as_bool().unwrap();
+
+//                 if is_charset {
+//                     let charset = _language.get("values").unwrap().as_array().unwrap();
+//                     let charset = normalize_charset(charset);
+//                     charsets.insert(k.clone(), charset);
+//                 }
+//             }
+
+//             Language {
+//                 name: lang.clone(),
+//                 charsets,
+//             }
+//         })
+//         .collect();
+
+//     println!("{:#?}", languages);
+// }
+
+// use std::fs::File;
+// use std::io::Read;
+
+// use serde::{self, Deserialize, Serialize};
+// use std::collections::HashMap;
+// use toml::Value as TOMLParser;
+
+// #[derive(Debug, Deserialize, Serialize)]
+// struct Properties {
+//     pub name: String,
+//     pub lang: Vec<String>,
+// }
+
+// #[derive(Debug, Deserialize, Serialize)]
+// struct Language {
+//     pub name: String,
+//     pub charsets: Vec<HashMap<String, Vec<char>>>,
+// }
+
+// fn main() {
+//     let mut contents = String::new();
+
+//     let mut file = File::open("F:\\kryptopass-clia\\Rules.toml").unwrap();
+//     file.read_to_string(&mut contents).unwrap();
+
+//     let toml = contents.parse::<TOMLParser>().unwrap();
+
+//     let properties_table = toml.get("properties").unwrap();
+//     let properties = properties_table.as_table().unwrap();
+//     let properties = Properties::deserialize(properties.clone()).unwrap();
+
+//     let mut languages: Vec<Language> = vec![];
+
+//     for lang in properties.lang {
+//         let language_table = toml.get(&lang).unwrap();
+//         let language = language_table.as_table().unwrap();
+
+//         let mut charsets: Vec<HashMap<String, Vec<char>>> = vec![];
+
+//         for k in language.keys() {
+//             let _language = language.get(k).unwrap();
+
+//             let is_charset = _language.get("charset").unwrap().as_bool().unwrap();
+
+//             if is_charset {
+//                 let charset = _language.get("values").unwrap().as_array().unwrap();
+//                 let charset = normalize_charset(charset);
+//                 let mut charset_map: HashMap<String, Vec<char>> = HashMap::new();
+
+//                 charset_map.insert(k.clone(), charset);
+
+//                 charsets.push(charset_map);
+//             }
+//         }
+
+//         let language = Language {
+//             name: String::from(lang),
+//             charsets,
+//         };
+
+//         languages.push(language);
+//     }
+
+//     println!("{:#?}", languages);
+// }
+
+// fn normalize_charset(charset: &Vec<TOMLParser>) -> Vec<char> {
+//     let mut result = Vec::new();
+
+//     for value in charset {
+//         match value {
+//             TOMLParser::Table(table) => {
+//                 let start = table.get("start").unwrap().as_integer().unwrap() as u32;
+//                 let end = table.get("end").unwrap().as_integer().unwrap() as u32;
+//                 for code in start..=end {
+//                     if let Some(character) = std::char::from_u32(code) {
+//                         result.push(character);
+//                     }
+//                 }
+//             }
+//             TOMLParser::Integer(code) => {
+//                 if let Some(character) = std::char::from_u32(*code as u32) {
+//                     result.push(character);
+//                 }
+//             }
+//             _ => (),
+//         }
+//     }
+
+//     result
+// }
+
+
+
+
+// use serde::Deserialize;
+// use std::collections::HashMap;
+
+// #[derive(Debug, Deserialize)]
+// #[serde(untagged)]
+// enum CharacterRange {
+//     Range { start: u32, end: u32 },
+//     Single(u32),
+// }
+
+// #[derive(Debug, Deserialize)]
+// pub struct Requirements {
+//     requirements: HashMap<String, Vec<CharacterRange>>,
+// }
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::{Error, ErrorKind, Read};
+
+use serde::{Deserialize, Serialize};
+use toml::Value as TOMLParser;
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Config {
+    properties: Properties,
+    requirements: HashMap<String, Requirement>,
+    es: Language,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Properties {
+    name: String,
+    lang: Vec<String>,
+    #[serde(rename = "type")]
+    type_: String,
+    length: Length,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Length {
+    min: u32,
+    max: u32,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Requirement {
+    min: u32,
+    max: u32,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Language {
+    uppercase: Values,
+    lowercase: Values,
+    digits: Values,
+    symbols: Values,
+}
+
+#[derive(Debug, Deserialize, Serialize)]
+struct Values {
+    values: Vec<Value>,
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(untagged)]
+enum Value {
+    Range { start: u32, end: u32 },
+    Single(u32),
+}
+
+pub struct Rules {
+    config: Config,
+}
+
+impl Rules {
+    pub fn from_file(file_path: String) -> Result<Self, Error> {
+        let mut file = File::open(file_path)?;
+        let mut contents = String::new();
+        file.read_to_string(&mut contents)?;
+
+        let config: Config = match toml::from_str(&contents) {
+            Ok(c) => c,
+            Err(_) => return Err(Error::new(ErrorKind::Other, "Failed to parse TOML")),
+        };
+
+        println!("{:#?}", unicode_to_utf8(config.es.digits.values.clone()));
+
+        Ok(Rules { config })
+    }
+}
+
+fn unicode_to_utf8(values: Vec<Value>) -> Vec<String> {
+    let mut utf8_values = Vec::new();
+
+    for value in values {
+        match value {
+            Value::Range { start, end } => {
+                for code in start..=end {
+                    if let Some(character) = std::char::from_u32(code) {
+                        utf8_values.push(character.to_string());
+                    }
+                }
+            }
+            Value::Single(code) => {
+                if let Some(character) = std::char::from_u32(code) {
+                    utf8_values.push(character.to_string());
+                }
+            }
+        }
+    }
+
+    utf8_values
+}
+
+// pub struct Rules {}
+// impl Rules {
+//     pub fn from_file(file_path: String) -> Result<Self, Error> {
+//         let mut file = File::open(file_path)?;
+//         let mut contents = String::new();
+//         file.read_to_string(&mut contents)?;
+
+//         let toml = match contents.parse::<TOMLParser>() {
+//             Ok(t) => t,
+//             Err(_) => return Err(Error::new(ErrorKind::Other, "Failed to parse TOML")),
+//         };
+
+//         let digits = toml
+//             .get("es")
+//             .unwrap()
+//             .get("digits")
+//             .unwrap()
+//             .get("values")
+//             .unwrap();
+
+//         println!("{:#?}", unicode_to_utf8(*digits));
+
+//         Ok(Rules {})
+//     }
+// }
+
+// mod interfaces;
+
+// use serde::Deserialize;
+// use std::collections::HashMap;
+// use std::fs::File;
+// use std::io::{Error, ErrorKind, Read};
+// use toml::Value;
+
+// use interfaces::Requirements;
+
+// pub struct Rules {
+//     // pub properties: Properties,
+//     // pub requirements: Requirement,
+// }
+
+// impl Rules {
+//     pub fn from_file(file_path: String) -> Result<Self, Error> {
+//         let mut file = File::open(file_path)?;
+//         let mut contents = String::new();
+//         file.read_to_string(&mut contents)?;
+
+//         let toml = match contents.parse::<Value>() {
+//             Ok(t) => t,
+//             Err(_) => return Err(Error::new(ErrorKind::Other, "Failed to parse TOML")),
+//         };
+
+//         let es_requirements = match toml.get("es") {
+//             Some(t) => t,
+//             None => return Err(Error::new(ErrorKind::Other, "Missing 'es' section")),
+//         };
+
+//         let es_requirements = match es_requirements.as_table() {
+//             Some(t) => t,
+//             None => return Err(Error::new(ErrorKind::Other, "'es' section must be a table")),
+//         };
+
+//         let es_requirements = match Requirements::deserialize(es_requirements.clone()) {
+//             Ok(p) => p,
+//             Err(_) => {
+//                 return Err(Error::new(
+//                     ErrorKind::Other,
+//                     "Failed to deserialize es requirements",
+//                 ))
+//             }
+//         };
+
+//         println!("{:#?}", es_requirements);
+
+//         Ok(Rules {
+//             // properties,
+//             // requirements,
+//         })
+//     }
+// }
+
+// // // Parse properties section
+
+// // let properties_table = match toml.get("properties") {
+// //     Some(t) => t,
+// //     None => return Err(Error::new(ErrorKind::Other, "Missing 'properties' section")),
+// // };
+
+// // let properties = match properties_table.as_table() {
+// //     Some(t) => t,
+// //     None => {
+// //         return Err(Error::new(
+// //             ErrorKind::Other,
+// //             "'properties' section must be a table",
+// //         ))
+// //     }
+// // };
+
+// // let properties = match Properties::deserialize(properties.clone()) {
+// //     Ok(p) => p,
+// //     Err(_) => {
+// //         return Err(Error::new(
+// //             ErrorKind::Other,
+// //             "Failed to deserialize properties",
+// //         ))
+// //     }
+// // };
+
+// // requirements: Requirement,
+// // allowed_chars: AllowedChars,
+// // not_allowed_chars: NotAllowedChars,
+// // rules: Rules,
+// // language_specific: HashMap<String, LanguageSpecific>, // Use HashMap for language-specific configs
+
+// // let requirements = toml
+// //     .get("")
+// //     .ok_or(Error::new(
+// //         std::io::ErrorKind::Other,
+// //         "Missing 'requirements' section",
+// //     ))?
+// //     .as_table()
+// //     .ok_or(Error::new(
+// //         std::io::ErrorKind::Other,
+// //         "'requirements' section must be a table",
+// //     ))?;
+// // let requirements = Requirement::deserialize(requirements.clone()).unwrap();
+
+// // let allowed_chars = toml
+// //     .get("allowed")
+// //     .ok_or(Error::new(
+// //         std::io::ErrorKind::Other,
+// //         "Missing 'allowed' section",
+// //     ))?
+// //     .as_table()
+// //     .ok_or(Error::new(
+// //         std::io::ErrorKind::Other,
+// //         "'allowed' section must be a table",
+// //     ))?;
+// // let allowed_chars = AllowedChars::deserialize(allowed_chars.clone()).unwrap();
+
+// // let not_allowed_chars = toml
+// //     .get("not_allowed")
+// //     .ok_or(Error::new(
+// //         std::io::ErrorKind::Other,
+// //         "Missing 'not_allowed' section",
+// //     ))?
+// //     .as_table()
+// //     .ok_or(Error::new(
+// //         std::io::ErrorKind::Other,
+// //         "'not_allowed' section must be a table",
+// //     ))?;
+// // let not_allowed_chars = NotAllowedChars::deserialize(not_allowed_chars.clone()).unwrap();
+
+// // let rules = toml
+// //     .get("rules")
+// //     .ok_or(Error::new(
+// //         std::io::ErrorKind::Other,
+// //         "Missing 'rules' section",
+// //     ))?
+// //     .as_table()
+// //     .ok_or(Error::new(
+// //         std::io::ErrorKind::Other,
+// //         "'rules' section must be a table",
+// //     ))?;
+// // let rules = Rules::deserialize(rules.clone()).unwrap();
+
+// // let mut language_specific = HashMap::new();
+
+// // for (lang, table) in toml.as_table().unwrap().iter() {
+// //     if lang != "properties"
+// //         && lang != "requirements"
+// //         && lang != "allowed"
+// //         && lang != "not_allowed"
+// //         && lang != "rules"
+// //     {
+// //         let language_specific_config =
+// //             LanguageSpecific::deserialize(table.clone()).unwrap();
+// //         language_specific.insert(lang.to_string(), language_specific_config);
+// //     }
+// // }
+
+// // pub fn new() -> Self {
+// //     PasswordRules {
+// //         name: String::from("General Purpose Rules"),
+// //         lang: vec!["es", "en"],
+// //         length: Length::Range { min: 6, max: 128 },
+// //     }
+// // }
+
+// // pub fn from_file(file: String) -> Self {
+// //     PasswordRules {
+// //         name: String::from("General Purpose Rules"),
+// //         lang: vec!["es", "en"],
+// //         length: Length::Number(8),
+// //     }
+// // }
+
+// #[derive(Debug, Deserialize)]
+// pub struct MinMax {
+//     min: Option<u8>,
+//     max: Option<u8>,
+// }
+
+// #[derive(Debug, Deserialize)]
+// pub struct Properties {
+//     pub name: String,
+//     pub lang: Vec<String>,
+//     pub r#type: String, // Escape the type keyword
+// }
+
+// #[derive(Debug, Deserialize)]
+// pub struct Requirement {
+//     length: Option<MinMax>,
+//     uppercase: Option<MinMax>,
+//     lowercase: Option<MinMax>,
+//     digits: Option<MinMax>,
+//     symbols: Option<MinMax>,
+// }
+
+// #[derive(Debug, Deserialize)]
+// pub struct CharacterRange {
+//     start: u8,
+//     end: u8,
+// }
+
+// #[derive(Debug, Deserialize)]
+// pub struct AllowedChars {
+//     include: Vec<u8>,
+// }
+
+// #[derive(Debug, Deserialize)]
+// pub struct NotAllowedChars {
+//     exclude: Vec<u8>,
+// }
+
+// #[derive(Debug, Deserialize)]
+// pub struct Rules {
+//     max_consecutive: u8,
+//     min_entropy: f64, // Use f64 for decimal values
+// }
+
+// #[derive(Debug, Deserialize)]
+// pub struct LanguageSpecific {
+//     uppercase: Vec<CharacterRange>,
+//     lowercase: Vec<CharacterRange>,
+//     digits: Vec<CharacterRange>,
+//     symbols: Vec<CharacterRange>,
+// }
+
+
+
+
+
+
+Vamos a hacer algo cambie todo el archivo ahora es asi
+
+# TOML [Tom's Obvious Minimal Language]
+#  Perfiles del generador de contraseñas 
+
+# Propiedades generales de la regla
+[properties]
+name = "Perfil del Banco Merc"  # Rule name
+lang = ["es"]                          # Languages supported by the rule e.g ["ja", "en"] or "zh" use ISO_639-2 codes
+type = "password"               # password or passphrase
+length = { min = 6, max = 128 } # Number or { min = Number, max = Number }
+
+
+# Requisitos de la contraseña
+[requirements]  
+uppercase = { min = 1, max = 6 }
+lowercase = { min = 1, max = 26 }
+digits = { min = 2, max = 16 }
+symbols = { min = 2, max = 1 }
+
+[es]    # Configuración específica para el idioma español
+uppercase = [
+    { start = 0x0041, end = 0x005A }, # A-Z
+    0x00D1,                           # Ñ
+    0x00C1,                           # Á
+    0x00C9,                           # É
+    0x00CD,                           # Í
+    0x00D3,                           # Ó
+    0x00DA,                           # Ú
+    0x00DC,                           # Ü
+]
+
+lowercase = [
+    { start = 0x0061, end = 0x007A }, # a-z
+    0x00F1,                           # ñ
+    0x00E1,                           # á
+    0x00E9,                           # é
+    0x00ED,                           # í
+    0x00F3,                           # ó
+    0x00FA,                           # ú
+    0x00FC,                           # ü
+]
+
+digits = [
+    { start = 0x0030, end = 0x0039 }, # 0-9
+]
+
+symbols = [
+    # Standard English symbols
+    { "start" = 0x0021, "end" = 0x002F }, # !\"#$%&'()*+,-./
+    { "start" = 0x003A, "end" = 0x0040 }, # :;<=>?@
+    { "start" = 0x005B, "end" = 0x0060 }, # [\\]^_`
+    { "start" = 0x007B, "end" = 0x007E }, # {|}~
+
+    # Extra symbols specific to Spanish
+    0x00BF,                               # ¿
+    0x00A1,                               # ¡
+    0x00A8,                               # ¨
+]
+
+La idea es que las keys de requirements dependan de los nombres de las keys de (en este caso) [es] , y [es] se debe encontrar en la lista de los idiomas.
+
+algo asi tenia pero no se
+
+mod interfaces;
+
+use serde::Deserialize;
+use std::collections::HashMap;
+use std::fs::File;
+use std::io::{Error, ErrorKind, Read};
+use toml::Value;
+
+use interfaces::{Properties, Requirement};
+
+pub struct Rules {
+    pub properties: Properties,
+    // pub requirements: Requirement,
+}
+
+impl Rules {
+    pub fn from_file(file_path: String) -> Result<Self, Error> {
+        let mut file = File::open(file_path)?;
+        let mut contents = String::new();
+        file.read_to_string(&mut contents)?;
+
+        let toml = match contents.parse::<Value>() {
+            Ok(t) => t,
+            Err(_) => return Err(Error::new(ErrorKind::Other, "Failed to parse TOML")),
+        };
+
+        // Parse properties section
+
+        let properties_table = match toml.get("properties") {
+            Some(t) => t,
+            None => return Err(Error::new(ErrorKind::Other, "Missing 'properties' section")),
+        };
+
+        let properties = match properties_table.as_table() {
+            Some(t) => t,
+            None => {
+                return Err(Error::new(
+                    ErrorKind::Other,
+                    "'properties' section must be a table",
+                ))
+            }
+        };
+
+        let properties = match Properties::deserialize(properties.clone()) {
+            Ok(p) => p,
+            Err(_) => {
+                return Err(Error::new(
+                    ErrorKind::Other,
+                    "Failed to deserialize properties",
+                ))
+            }
+        };
+
+        Ok(Rules {
+            properties,
+            // requirements,
+        })
+    }
+}
+
+
+
+
+
+
+
+mod kplib;
+
+use openssl::init;
+
+// use kplib::generators::password::PasswordEngine;
+use kplib::generators::rules::Rules;
+init();
+let rules_file = String::from("F:\\kryptopass-clia\\Rules.toml");
+let rules = Rules::from_file(rules_file).unwrap();
+
+// println!("{:#?}", rules.properties);
+// println!("{:#?}", rules.requirements);
+
+// let password_engine = PasswordEngine::from_rules(rules);
+// let my_password = password_engine.generate();
+// println!("My Password is: {}", my_password);
+
+
+
+
+
+
+
+
+
+
+
+
 use openssl::rand::rand_bytes;
 use std::mem;
 
