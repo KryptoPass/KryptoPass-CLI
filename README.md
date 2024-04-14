@@ -5,18 +5,18 @@ KryptoPass es más que un simple administrador de contraseñas. Es una fortaleza
 ## Características
 
 - [x] Generador de Contraseñas: Crea contraseñas seguras y personalizadas con solo un comando.
-- [] Generador de Frases de Contraseñas: Genera frases de contraseñas seguras y fáciles de recordar. (Próximamente)
-- [] Herramientas de Codificación/Decodificación: Codifica y decodifica en base64, hex, binario. (Próximamente)
-- [] Calculadora de Hashes: Calcula y verifica hashes de tus datos. (Próximamente)
+- [ ] Generador de Frases de Contraseñas: Genera frases de contraseñas seguras y fáciles de recordar. (Próximamente)
+- [ ] Herramientas de Codificación/Decodificación: Codifica y decodifica en base64, hex, binario. (Próximamente)
+- [ ] Calculadora de Hashes: Calcula y verifica hashes de tus datos. (Próximamente)
 
 ## Planes Futuros
 
-- [] Unidades Virtuales y File System Filter Drivers: Controla el acceso al sistema de archivos con un controlador de filtro de sistema de archivos. (Próximamente)
-- [] Plugins: Integra código de terceros para ampliar las funcionalidades. (Próximamente)
-- [] Nube: Almacena y recupera contraseñas en la nube. (Próximamente)
-- [] Módulo de Hardware: Capacidad para admitir hardware especializado, generar números aleatorios, autenticar usuarios y más.
-- [] Módulo de Red: Comparte información confidencial de forma segura. (Próximamente)
-- [] Sincronización local: Sincroniza tus contraseñas localmente, sin conexión.
+- [ ] Unidades Virtuales y File System Filter Drivers: Controla el acceso al sistema de archivos con un controlador de filtro de sistema de archivos. (Próximamente)
+- [ ] Plugins: Integra código de terceros para ampliar las funcionalidades. (Próximamente)
+- [ ] Nube: Almacena y recupera contraseñas en la nube. (Próximamente)
+- [ ] Módulo de Hardware: Capacidad para admitir hardware especializado, generar números aleatorios, autenticar usuarios y más.
+- [ ] Módulo de Red: Comparte información confidencial de forma segura. (Próximamente)
+- [ ] Sincronización local: Sincroniza tus contraseñas localmente, sin conexión.
 
 Además de esto, está pendiente el desarrollo de la `extensión del navegador`, la versión GUI gráfica (`Windows`, `Linux`, `Mac`), la `aplicación del servidor` empresarial y las aplicaciones móviles para `Android` e `IOS`.
 
