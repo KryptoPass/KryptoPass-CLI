@@ -11,11 +11,11 @@ KryptoPass es más que un simple administrador de contraseñas. Es una fortaleza
 
 ## Planes Futuros
 
-- [ ] Unidades Virtuales y File System Filter Drivers: Controla el acceso al sistema de archivos con un controlador de filtro de sistema de archivos. (Próximamente)
-- [ ] Plugins: Integra código de terceros para ampliar las funcionalidades. (Próximamente)
-- [ ] Nube: Almacena y recupera contraseñas en la nube. (Próximamente)
+- [ ] Unidades Virtuales y File System Filter Drivers: Controla el acceso al sistema de archivos con un controlador de filtro de sistema de archivos.
+- [ ] Plugins: Integra código de terceros para ampliar las funcionalidades.
+- [ ] Nube: Almacena y recupera contraseñas en la nube.
 - [ ] Módulo de Hardware: Capacidad para admitir hardware especializado, generar números aleatorios, autenticar usuarios y más.
-- [ ] Módulo de Red: Comparte información confidencial de forma segura. (Próximamente)
+- [ ] Módulo de Red: Comparte información confidencial de forma segura.
 - [ ] Sincronización local: Sincroniza tus contraseñas localmente, sin conexión.
 
 Además de esto, está pendiente el desarrollo de la `extensión del navegador`, la versión GUI gráfica (`Windows`, `Linux`, `Mac`), la `aplicación del servidor` empresarial y las aplicaciones móviles para `Android` e `IOS`.
