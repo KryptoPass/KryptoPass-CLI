@@ -1,15 +1,21 @@
+use super::rules::{MinMax, Requirement, Rules};
 use crate::modules::core::crypto::random::Random;
-pub use crate::modules::core::generators::rules::{MinMax, Requirement, Rules};
 
-pub struct PasswordEngine {
+pub struct PasswordGenerator {
     rules: Rules,
 }
 
 const DEFAULT_LENGTH: u8 = 14;
 
-impl PasswordEngine {
+impl PasswordGenerator {
+    pub fn new() -> Self {
+        PasswordGenerator {
+            rules: Rules::default(),
+        }
+    }
+
     pub fn from_rules(rules: Rules) -> Self {
-        PasswordEngine { rules }
+        PasswordGenerator { rules }
     }
 
     pub fn generate(&self) -> Result<String, &'static str> {

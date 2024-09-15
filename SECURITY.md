@@ -1,14 +1,10 @@
- 
-# Política de seguridad
+# Security Policy
 
-Infórmenos lo antes posible cuando descubra un posible problema de seguridad y haremos todo lo posible por resolverlo con prontitud.
-Concédanos un plazo razonable para resolver el problema antes de revelarlo al público o a terceros. Si procede, podemos revelar públicamente el problema antes de resolverlo.
+Please notify us as soon as possible if you discover a potential security issue, and we will make every effort to resolve it promptly. Allow us a reasonable amount of time to address the issue before disclosing it publicly or to any third parties. If necessary, we may disclose the issue publicly before it is fully resolved.
 
-## Versiones compatibles
-Normalmente no aplicamos parches a versiones que están dos números por debajo de la versión principal, pero si se trata de un problema grave, siempre hay una excepción.
-Hacemos todo lo posible para mantener seguros a nuestros usuarios, pero esperamos que utilicen la última versión.
+## Supported Versions
+We typically do not apply patches to versions that are more than two releases behind the current major version. However, for critical issues, exceptions may be made. We strive to keep our users secure, but we encourage you to always use the latest version.
 
-## Informar de una vulnerabilidad
-Puedes ponerte en contacto con nosotros por correo electrónico en security@kryptopass.org.
-Para informes menos delicados, también puedes abrir una issue o pull request en GitHub.
- 
+## Reporting a Vulnerability
+You can contact us via email at security@kryptopass.org.  
+For less sensitive issues, you may also open an issue or submit a pull request on GitHub.
