@@ -1,0 +1,29 @@
+[properties]
+version = "0.1.0"
+lang = ["es"]
+name = "Perfil Seguro Corporativo"
+type = "password"
+
+[requirements]
+digits = {min = 2, max = 6}
+lowercase = {min = 2}
+uppercase = {min = 2}
+symbols = {min = 1, max = 4}
+length = {min = 10, max = 64}
+
+[allowed]
+include = ["U+30A2"]
+
+[not_allowed]
+exclude = ["U+1F600-U+1F64F"]
+
+[es]
+uppercase = ["U+0041-U+005A", "U+00D1"]
+lowercase = ["U+0061-U+007A", "U+00F1"]
+digits = ["U+0030-U+0039"]
+symbols = ["U+0021-U+002F", "U+00A1"]
+
+[rules]
+max-consecutive = 2
+min-entropy-bits = 24
+pattern = "(uppercase){1}*"

@@ -4,11 +4,8 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-base64 = "0.22.0"
-clap = { version = "4.5.3", features = ["derive"] }
-hex = "0.4.3"
-log = { version ="0.4.21", features = ["max_level_debug", "release_max_level_warn"] }
-openssl = "0.10.64"
 rand = "0.8.5"
-serde = { version = "1.0.197", features = ["derive"] }
-toml = "0.8.12"
+regex = "1.10.6"
+serde = { version = "1.0.210", features = ["derive"] }
+toml = "0.8.19"
+unicode-segmentation = "1.12.0"
