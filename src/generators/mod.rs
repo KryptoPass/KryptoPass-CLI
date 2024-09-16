@@ -28,7 +28,8 @@ impl PasswordGenerator {
     }
 
     pub fn generate(&self) -> Result<String, Box<dyn Error>> {
-        // Validar la configuración antes de proceder
+        // Validar la configuración antes de pro
+        ceder
         validate_config(&self.config)?;
 
         Ok("Hello, world!".to_string())
