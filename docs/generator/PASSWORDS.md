@@ -2,23 +2,23 @@
 
 ## Introducción
 
-El generador de contraseñas está diseñado para proporcionar flexibilidad y seguridad en la generación de contraseñas, a la vez que simplifica la administración interna de los requisitos, validaciones de rangos, y patrones. Esta documentación explica el diseño del sistema y cómo abordar las validaciones de longitud, rangos y patrones de forma cohesiva. También funciona como una especificación del uso y funcionamiento del generador.
+El generador de contraseñas de KryptoPass está diseñado para proporcionar flexibilidad y seguridad en la generación de contraseñas personalizadas, permitiendo una administración simplificada de los requisitos, validaciones de rangos, y patrones. Este documento está dirigido a desarrolladores que deseen entender y modificar el generador de contraseñas, explicando su diseño interno y cómo funciona la validación de longitud, rangos, y patrones de manera cohesiva.
+
+El formato de configuración es TOML, que permite una estructura clara, fácil de leer y escribir, ideal para definir los perfiles de generación de contraseñas.
 
 ## Diseño General
 
-El generador maneja los siguientes aspectos:
+El generador maneja los siguientes aspectos fundamentales:
 
 1. **Rangos y longitud de la contraseña**: Los valores mínimos y máximos para cada tipo de carácter deben ser consistentes con la longitud total de la contraseña.
 2. **Integración de patrones**: Los patrones deben respetar los requisitos de rangos y proveer una estructura opcional para la generación de contraseñas.
 3. **Validación y generación**: Se valida que los requisitos sean coherentes antes de proceder con la generación de la contraseña.
 
-Se decidió utilizar [TOML](https://toml.io/en/) como formato de archivo de configuración para el generador de contraseñas; ya que es fácil de leer y escribir, y permite una estructura clara y concisa. 
-
-El archivo de configuración está compuesto por varias secciones (algunas opcionales), lo que permite que los usuarios definan solo los aspectos que consideran relevantes:
+El archivo de configuración se compone de varias secciones, algunas de ellas opcionales, que permiten a los usuarios definir solo los aspectos relevantes:
 
 - `[properties]`: Define las propiedades generales del perfil de generación.
 - `[requirements]`: Establece los requisitos mínimos y máximos para tipos de caracteres y longitud.
-- `[allowed]` y [not_allowed]: Conjuntos de caracteres permitidos y excluidos.
+- `[allowed]` y [not_allowed]: CConjuntos de caracteres permitidos y excluidos, definidos por sus códigos Unicode.
 - `[rules]`: Especifica reglas adicionales y/o avanzadas diseñadas para brindar inteligencia y seguridad a la generación de contraseñas.
 - `[custom]`: Definición de conjuntos de caracteres personalizados basados en los idiomas especificados en `[properties].[lang]`.
 
@@ -48,7 +48,7 @@ Dependiendo de si existe un patrón, el proceso de generación sigue dos rutas:
 Una vez generada, la contraseña es validada para asegurar que cumple con los requisitos de longitud, cantidad de tipos de caracteres, y reglas adicionales (por ejemplo, entropía mínima).
 
 ## Sección `[properties]`
-Define las propiedades generales del perfil, incluyendo el nombre, idioma y tipo de generación. Todos los campos en esta sección son obligatorios.
+Define las propiedades generales del perfil de generación de contraseñas. Esta sección es obligatoria y debe incluir los siguientes campos:
 
 ```toml
 [properties]
@@ -60,7 +60,7 @@ type = "password"                   # Tipo de generación (password, passphrase)
 
 ## Sección `[requirements]`
 
-Define los requisitos de tipos de caracteres, rangos mínimos y máximos, así como un las reglas que el patrón opcional debe seguir para la generación de contraseñas. El campo `length` es obligatorio, ya que define la longitud mínima, máxima o literal de la contraseña. Además de los rangos `{min, max},` también puedes usar números literales (enteros positivos) para definir cantidades fijas.
+Aquí se definen los tipos de caracteres permitidos y sus rangos mínimos y máximos. El campo `length` es obligatorio y establece la longitud mínima, máxima o literal de la contraseña. Los rangos `{min, max}` o números fijos determinan cuántos caracteres de cada tipo deben incluirse en la contraseña.
 
 ```toml
 [requirements]
@@ -76,8 +76,8 @@ custom_set_3 = 3                  # Definido por el usuario, número literal (ej
 
 La validación de rangos y longitud se realiza asegurando que:
 
-1. La suma de los valores mínimos de cada tipo de carácter no exceda la longitud máxima.
-2. La suma de los valores máximos de cada tipo de carácter no sea menor a la longitud mínima.
+1. La suma de los `valores mínimos` de cada tipo de carácter no exceda la longitud máxima.
+2. La suma de los `valores máximos` de cada tipo de carácter no sea menor a la longitud mínima.
 
 ### Ejemplo de validación:
 
@@ -107,3 +107,62 @@ La suma de mínimos (7) es menor o igual a la longitud máxima (64), y la suma d
 **Restricciones:**
 - No se puede usar `length` como nombre de conjunto. Esto se debe a que length tiene un propósito específico en el sistema y es necesario para definir la longitud total de la contraseña.
 - No se pueden repetir nombres de conjuntos. Cada conjunto debe tener un nombre único para evitar conflictos en la generación de contraseñas.
+
+## Secciones `[allowed]` y `[not_allowed]`
+
+Define caracteres adicionales permitidos o excluidos mediante códigos Unicode. Los caracteres en la lista `not_allowed` tienen prioridad y serán excluidos incluso si están permitidos en `allowed`.
+
+```toml
+[allowed]
+include = ["U+30A2", "U+02DC"]    # Caracteres permitidos (ejemplo: Katakana Letter A y virgulilla)
+
+[not_allowed]
+exclude = ["U+1F600-U+1F64F"]     # Caracteres excluidos (ejemplo: Emoticonos)
+```
+
+## Sección [rules]
+
+Aquí se especifican reglas avanzadas como la estructura de patrones, el número máximo de caracteres consecutivos, y la entropía mínima requerida.
+
+
+### Ejemplo de reglas:
+
+```toml
+[rules]
+max-consecutive = 2          # Máximo de caracteres consecutivos iguales
+min-entropy-bits = 24        # Entropía mínima requerida (en bits)
+pattern = "(uppercase){1}(lowercase){3}(digits){2}*"  # Patrón opcional
+```
+
+### Patrones
+
+Los patrones permiten definir una estructura específica para la contraseña. La sintaxis incluye bloques, conjuntos de caracteres, cantidades y negaciones:
+
+- Bloques: Se definen entre paréntesis `()`.
+- Cantidad: Indicada entre llaves `{}`, puede ser un valor fijo, un rango, o ilimitado.
+- Negación: Utilizando `^` para excluir ciertos conjuntos.
+- Carácter de control: El `*` indica que el resto de la contraseña puede ser cualquier combinación de caracteres permitidos.
+
+```toml
+[rules]
+pattern = "(uppercase){1}(lowercase){3}(digits){2}*"  # Inicia con 1 mayúscula, seguido de 3 minúsculas, 2 dígitos y cualquier combinación para completar la longitud.
+```
+
+### Validación de Patrones
+
+Los patrones deben respetar los requisitos definidos en `[requirements]`. La cantidad de caracteres especificada en el patrón debe estar dentro de los rangos mínimos y máximos permitidos.
+
+1. Se verifica que el patrón no exceda los valores máximos permitidos por los requisitos.
+2. Se ajustan los mínimos y máximos de los tipos de caracteres si el patrón impone cantidades fijas.
+
+# Secciones `[langauge_code]`
+
+Estas seccies permiten definir conjuntos de caracteres personalizados basados en el idioma especificado en [properties].[lang]. Esto es útil para soportar múltiples idiomas o crear perfiles específicos.
+
+```toml
+[iso_639_1_code]
+uppercase = ["U+0041-U+005A", "U+00D1"]     # A-Z y Ñ
+my_custom_set = ["U+0061-U+007A", "U+00F1"] # a-z y ñ
+digits = ["U+0030-U+0039"]                  # 0-9
+hi = ["U+0021-U+002F", "U+00A1"]            # !"#$%&'()*+,-./ y ¡
+```
