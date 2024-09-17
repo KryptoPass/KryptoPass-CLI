@@ -1,7 +1,5 @@
-use std::collections::HashMap;
-
 use super::{
-    config::{Config, LanguageSets, LengthRequirement, Rules, SetRequirement},
+    config::{Config, LengthRequirement, Rules, SetRequirement},
     utils::{check_for_wildcard, parse_pattern, set_exists, PatternElement},
 };
 use thiserror::Error;
@@ -49,7 +47,7 @@ fn validate_rules(rules: &Rules, config: &Config) -> ValResult {
 fn validate_pattern(pattern_str: &str, config: &Config) -> ValResult {
     // Analizar el pattern: Parsear el patrón para extraer los bloques, conjuntos y cantidades.
     let patterns = parse_pattern(pattern_str).ok_or(ValidationError::InvalidPattern)?;
-    let languages = &config.languages;
+    let languages_sets = &config.languages;
     let requirements = &config.requirements;
 
     // Calcular la longitud mínima y máxima posible del pattern
@@ -60,13 +58,15 @@ fn validate_pattern(pattern_str: &str, config: &Config) -> ValResult {
         match pattern {
             PatternElement::Set { name, min, max, .. } => {
                 // Verificar que los conjuntos utilizados en el pattern existen en las secciones de idiomas y requisitos.
-                if let Err(err) = check_set_exists(name, languages, &requirements.sets) {
-                    return Err(err);
+                if !set_exists(languages_sets, &name) {
+                    return Err(ValidationError::SetNotFound(name.to_string()));
                 }
 
-                // Validar el conjunto de requisitos
-                let set_req = &requirements.sets[name];
-                validate_set_requirement(set_req, name, *min, *max)?;
+                if set_exists(&requirements.sets, &name) {
+                    // Validar el conjunto de requisitos
+                    let set_req = &requirements.sets[name];
+                    validate_set_requirement(set_req, name, *min, *max)?;
+                }
 
                 // Sumar las cantidades mínimas y máximas de cada bloque.
                 min_length += min;
@@ -168,17 +168,6 @@ fn validate_set_requirement(
                 });
             }
         }
-    }
-    Ok(())
-}
-
-fn check_set_exists(
-    name: &str,
-    languages: &HashMap<String, LanguageSets>,
-    requirements: &HashMap<String, SetRequirement>,
-) -> ValResult {
-    if !set_exists(languages, &name) && !set_exists(requirements, &name) {
-        return Err(ValidationError::SetNotFound(name.to_string()));
     }
     Ok(())
 }
