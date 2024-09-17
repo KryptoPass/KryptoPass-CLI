@@ -1,4 +1,4 @@
 /target
+/tmp
 .tmp
-.rules.toml
-/docs
+example.toml
