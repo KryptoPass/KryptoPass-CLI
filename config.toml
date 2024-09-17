@@ -5,11 +5,11 @@ name = "Perfil Seguro Corporativo"
 type = "password"
 
 [requirements]
-digits = {min = 2, max = 6}
-lowercase = {min = 2}
-uppercase = {min = 2}
-symbols = {min = 1, max = 4}
-length = {min = 10, max = 64}
+digits = {min = 2, max = 6}     # 2 a 6 dígitos
+lowercase = {min = 2}           # mínimo 2 minúsculas
+uppercase = {min = 2}           # mínimo 2 mayúsculas
+symbols = {min = 1, max = 4}    # 1 a 4 símbolos
+length = {min = 10, max = 64}   # 10 a 64 caracteres
 
 [allowed]
 include = ["U+30A2"]
@@ -24,6 +24,11 @@ digits = ["U+0030-U+0039"]
 symbols = ["U+0021-U+002F", "U+00A1"]
 
 [rules]
-max-consecutive = 2
-min-entropy-bits = 24
-pattern = "(uppercase){1}*"
+pattern = "(uppercase){1}*"     # Debe empezar con una mayúscula y luego seguir con la generación normal
+max-consecutive = 2             # máximo 2 caracteres consecutivos
+min-entropy-bits = 24           # mínimo 24 bits de entropía
+
+# min-length = 2 + 2 + 2 + 1 = 7
+# max-length = 6 + 4 + (2 * x) = 12 + (2 * x)
+
+# Pattern: 1 + x

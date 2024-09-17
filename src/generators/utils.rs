@@ -1,4 +1,8 @@
+use std::collections::HashMap;
+
 use regex::Regex;
+
+use super::config::{LanguageSets, SetRequirement};
 
 #[derive(Debug)]
 pub enum PatternElement {
@@ -102,4 +106,39 @@ pub fn has_max_consecutive(chars: &Vec<char>, max_consecutive: usize) -> bool {
         }
     }
     false
+}
+
+pub fn check_for_wildcard(pattern: &[PatternElement]) -> bool {
+    pattern
+        .iter()
+        .any(|element| matches!(element, PatternElement::Wildcard))
+}
+
+// Definimos el trait SetContainer
+trait SetContainer {
+    fn contains_set(&self, set_name: &str) -> bool;
+}
+
+// Implementamos el trait para LanguageSets
+impl SetContainer for LanguageSets {
+    fn contains_set(&self, set_name: &str) -> bool {
+        self.sets.contains_key(set_name)
+    }
+}
+
+// Implementamos el trait para SetRequirement
+impl SetContainer for SetRequirement {
+    fn contains_set(&self, _: &str) -> bool {
+        match self {
+            SetRequirement::Range { .. } => false, // Asumiendo que Range no contiene sets
+            SetRequirement::Exact(_) => false,     // Asumiendo que Exact no contiene sets
+        }
+    }
+}
+
+// Modificamos la función set_exists para aceptar cualquier tipo que implemente SetContainer
+pub fn set_exists<T: SetContainer>(containers: &HashMap<String, T>, set_name: &str) -> bool {
+    containers
+        .iter()
+        .any(|(_, container)| container.contains_set(set_name))
 }
