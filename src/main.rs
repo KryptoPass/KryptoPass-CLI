@@ -4,9 +4,9 @@ use generators::PasswordGenerator;
 use std::error::Error;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let password_generator = PasswordGenerator::from_file("example.toml")?;
+    let pg = PasswordGenerator::from_file("example.toml")?;
 
-    let password = password_generator.generate();
+    let password = pg.generate();
 
     if let Some(password) = password {
         println!("{}", password);

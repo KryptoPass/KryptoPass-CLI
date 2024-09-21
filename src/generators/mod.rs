@@ -27,6 +27,8 @@ impl PasswordGenerator {
     }
 
     pub fn generate(&self) -> Option<String> {
+        println!("Generator Name: {}", self.config.properties.name);
+
         Some("Hello, world!".to_string())
     }
 }
